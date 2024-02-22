@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">OrderApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="full_details"><u>Full details</u></string>
+    <string name="textview">TextView</string>
+    <string name="todo">TODO</string>
+    <string name="kung_pao_tofu">Kung Pao Tofu</string>
+    <string name="sushi_rice_with_veggies_pork">Sushi rice with veggies, pork, a fried egg, and spicy gochujang sauce.</string>
+    <string name="list_fragment">List Fragment</string>
+    <string name="drop_down_arrow">Drop down arrow</string>
+    <string name="japanese">Japanese</string>
+    <string name="chinese">Chinese</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="philipino">Philipino</string>
+    <string name="korean">Korean</string>
+    <string name="go_back"><u>Go back</u></string>
+    <string name="ingredient_1"><strong>Ingredients</strong>:chicken, corn, peas, carrot, green onion, onion, garlic, eggs, white rice, canola oil, fish sauce.</string>
+    <string name="ingredient_2"><strong>Ingredients</strong>:tofu, corn, peas, carrot, green onion, onion, garlic, white rice, canola oil, tamari sauce.</string>
+    <string name="ingredient_3"><strong>Ingredients</strong>:chicken, leek onion, carrot, cucumber, sichuan pepper, canola oil, dried chili, ginger, chicken thigh, sesame oil, salt, white pepper, starch, white sugar, cooking wine, soy sauce, water, starch, rice viner, white rice, peanuts, garlic.</string>
+    <string name="ingredient_4"><strong>Ingredients</strong>:tofu, leek onion, carrot, cucumber, sichuan pepper, canola oil, dried chili, ginger, chicken thigh, sesame oil, salt, white pepper, starch, white sugar, cooking wine, tamari sauce, water, starch, rice viner, white rice, peanuts, garlic.</string>
+    <string name="ingredient_5"><strong>Ingredients</strong>:pork, cabbage, carrot, onion, pork chop, udon noodles, soy sauce, sake, mirin, canola oil, salt, black pepper.</string>
+    <string name="ingredient_6"><strong>Ingredients</strong>:tofu, cabbage, carrot, onion, pork chop, udon noodles, tamari sauce, sake, mirin, canola oil, salt, black pepper.</string>
+    <string name="ingredient_7"><strong>Ingredients</strong>:chicken, green beans, carrot, bell pepper, cabbage, garlic, onion, oyster sauce, soy sauce, black pepper, pancit canton noodles, canola oil, lime.</string>
+    <string name="ingredient_8"><strong>Ingredients</strong>:tofu, green beans, carrot, bell pepper, cabbage, garlic, onion, hoisin sauce, tamari sauce, black pepper, pancit canton noodles, canola oil, lime.</string>
+    <string name="ingredient_9"><strong>Ingredients</strong>:pork, egg, sushi rice, sesame seeds, green apple, garlic, soy sauce, white sugar, sesame oil, carrot, zucchini, spinach, bean sprouts, canola oil, salt, soy sauce, fish sauce, gochujang, mirin, rice vinegar.</string>
+    <string name="ingredient_10"><strong>Ingredients</strong>:tofu, sushi rice, sesame seeds, green apple, garlic, soy sauce, white sugar, sesame oil, carrot, zucchini, spinach, bean sprouts, canola oil, salt, soy sauce, fish sauce, gochujang, mirin, rice vinegar.</string>
+</resources>
