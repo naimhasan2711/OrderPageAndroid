@@ -64,9 +64,10 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="48dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/button_transparent_bg"
-        android:text="Lunch 12:00\nPM"
+        android:text="Lunch: 12:00\nPM"
+        android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_save"
@@ -77,12 +78,25 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/button_yellow_bg"
-        android:text="Dinner 6:00\nPM"
-        android:textColor="@color/white"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/button_transparent_bg"
+        android:text="Dinner: 6:00\nPM"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_save"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="24dp"
+        android:text="Choose delivery time"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_lunch"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.cptalpdeniz.android.orderapp
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.cptalpdeniz.android.orderapp.databinding.FragmentOrderBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class OrderFragment : Fragment() {
@@ -18,7 +24,7 @@ class OrderFragment : Fragment() {
         FoodItemProvider.foodList.toMutableList()
 
     private lateinit var adapter: FoodsAdapter
-
+    val flag = Flag(isLunchButtonPressed = false, isDinnerButtonPressed = false)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,6 +35,10 @@ class OrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val datesArray = getDatesArray()
+        datesArray.forEachIndexed { index, date ->
+            Log.d("Current Date>>>", "Index $index: $date")
+        }
         initAdapter()
         binding.leftIndicator.setOnClickListener {
             var tab = binding.viewpager.currentItem
@@ -66,6 +76,34 @@ class OrderFragment : Fragment() {
                 }
             }
         })
+        binding.btnLunch.setOnClickListener {
+            if (flag.isLunchButtonPressed) {
+                binding.btnLunch.setBackgroundResource(R.drawable.button_transparent_bg)
+                binding.btnLunch.setTextColor(Color.BLACK)
+            } else {
+                binding.btnLunch.setBackgroundResource(R.drawable.button_yellow_bg)
+                binding.btnLunch.setTextColor(Color.WHITE)
+            }
+            flag.isLunchButtonPressed = !flag.isLunchButtonPressed
+        }
+
+        binding.btnDinner.setOnClickListener {
+            if (flag.isDinnerButtonPressed) {
+                binding.btnDinner.setBackgroundResource(R.drawable.button_transparent_bg)
+                binding.btnDinner.setTextColor(Color.BLACK)
+            } else {
+                binding.btnDinner.setBackgroundResource(R.drawable.button_yellow_bg)
+                binding.btnDinner.setTextColor(Color.WHITE)
+            }
+            flag.isDinnerButtonPressed = !flag.isDinnerButtonPressed
+        }
+
+        binding.btnSave.setOnClickListener {
+            Log.d(
+                "Button pressed>>>",
+                "Lunch: ${flag.isLunchButtonPressed}, Dinner: ${flag.isDinnerButtonPressed}"
+            )
+        }
     }
 
     private fun initAdapter() {
@@ -79,6 +117,27 @@ class OrderFragment : Fragment() {
     private fun onItemSelected(foods: FoodItem) {
         foods.isflipped = !foods.isflipped
         adapter.notifyDataSetChanged()
+    }
+
+    private fun getDateInFormat(date: Date): String {
+        val dateFormat = SimpleDateFormat("EEE d MMM", Locale.getDefault())
+        return dateFormat.format(date)
+    }
+
+    private fun getDatesArray(): Array<String> {
+        val datesArray = arrayOfNulls<String>(10)
+        val calendar = Calendar.getInstance()
+
+        // Get current date
+        val currentDate = calendar.time
+        datesArray[0] = getDateInFormat(currentDate)
+
+        // Get next four dates
+        for (i in 1 until 10) {
+            calendar.add(Calendar.DATE, 1)
+            datesArray[i] = getDateInFormat(calendar.time)
+        }
+        return datesArray.requireNoNulls()
     }
 
 }
