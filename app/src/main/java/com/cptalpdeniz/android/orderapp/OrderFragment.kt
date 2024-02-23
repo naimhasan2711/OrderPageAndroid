@@ -39,12 +39,15 @@ class OrderFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val datesArray = getDatesArray()
-        datesArray.forEachIndexed { index, date ->
-            Log.d("Current Date>>>", "Index $index: $date")
-        }
+        binding.tvDate1.text = datesArray[0].substring(0,3)+"\n"+datesArray[0].substring(4,datesArray[0].length)
+        binding.tvDate2.text = datesArray[1].substring(0,3)+"\n"+datesArray[1].substring(4,datesArray[1].length)
+        binding.tvDate3.text = datesArray[2].substring(0,3)+"\n"+datesArray[2].substring(4,datesArray[2].length)
+        binding.tvDate4.text = datesArray[3].substring(0,3)+"\n"+datesArray[3].substring(4,datesArray[3].length)
+        binding.tvDate5.text = datesArray[4].substring(0,3)+"\n"+datesArray[4].substring(4,datesArray[4].length)
         initAdapter()
         viewPagerHandler()
         lunchButtonHandler()
