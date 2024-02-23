@@ -1,5 +1,6 @@
 package com.cptalpdeniz.android.orderapp
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -24,7 +25,12 @@ class OrderFragment : Fragment() {
         FoodItemProvider.foodList.toMutableList()
 
     private lateinit var adapter: FoodsAdapter
-    val flag = Flag(isLunchButtonPressed = false, isDinnerButtonPressed = false)
+    private val flag = Flag(
+        isLunchButtonPressed = false,
+        isDinnerButtonPressed = false,
+        isSaveButtonPressed = false
+    )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +46,27 @@ class OrderFragment : Fragment() {
             Log.d("Current Date>>>", "Index $index: $date")
         }
         initAdapter()
+        viewPagerHandler()
+        lunchButtonHandler()
+        dinnerButtonHandler()
+        saveButtonHandler()
+    }
+
+    private fun initAdapter() {
+        adapter = FoodsAdapter(
+            foodList = foodItemMutableLists,
+            onClickListener = { foods -> onItemSelected(foods) })
+        binding.viewpager.adapter = adapter
+        binding.viewpager.isUserInputEnabled = false
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun onItemSelected(foods: FoodItem) {
+        foods.isflipped = !foods.isflipped
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun viewPagerHandler() {
         binding.leftIndicator.setOnClickListener {
             var tab = binding.viewpager.currentItem
             if (tab > 0) {
@@ -60,22 +87,29 @@ class OrderFragment : Fragment() {
         binding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if (position == 0) {
-                    Glide.with(binding.leftIndicator.context)
-                        .load(R.drawable.baseline_arrow_left_black_24).into(binding.leftIndicator)
-                }
-                if (position == foodItemMutableLists.size - 1) {
-                    Glide.with(binding.rightIndicator.context)
-                        .load(R.drawable.baseline_arrow_right_black_24).into(binding.rightIndicator)
-                } else if (position > 0 && position < foodItemMutableLists.size - 1) {
-                    Glide.with(binding.leftIndicator.context)
-                        .load(R.drawable.baseline_arrow_left_yellow_24).into(binding.leftIndicator)
-                    Glide.with(binding.rightIndicator.context)
-                        .load(R.drawable.baseline_arrow_right_yellow_24)
-                        .into(binding.rightIndicator)
-                }
+                sliderHandler(position)
             }
         })
+    }
+
+    private fun sliderHandler(position: Int) {
+        if (position == 0) {
+            Glide.with(binding.leftIndicator.context)
+                .load(R.drawable.baseline_arrow_left_black_24).into(binding.leftIndicator)
+        }
+        if (position == foodItemMutableLists.size - 1) {
+            Glide.with(binding.rightIndicator.context)
+                .load(R.drawable.baseline_arrow_right_black_24).into(binding.rightIndicator)
+        } else if (position > 0 && position < foodItemMutableLists.size - 1) {
+            Glide.with(binding.leftIndicator.context)
+                .load(R.drawable.baseline_arrow_left_yellow_24).into(binding.leftIndicator)
+            Glide.with(binding.rightIndicator.context)
+                .load(R.drawable.baseline_arrow_right_yellow_24)
+                .into(binding.rightIndicator)
+        }
+    }
+
+    private fun lunchButtonHandler() {
         binding.btnLunch.setOnClickListener {
             if (flag.isLunchButtonPressed) {
                 binding.btnLunch.setBackgroundResource(R.drawable.button_transparent_bg)
@@ -86,7 +120,9 @@ class OrderFragment : Fragment() {
             }
             flag.isLunchButtonPressed = !flag.isLunchButtonPressed
         }
+    }
 
+    private fun dinnerButtonHandler() {
         binding.btnDinner.setOnClickListener {
             if (flag.isDinnerButtonPressed) {
                 binding.btnDinner.setBackgroundResource(R.drawable.button_transparent_bg)
@@ -97,26 +133,19 @@ class OrderFragment : Fragment() {
             }
             flag.isDinnerButtonPressed = !flag.isDinnerButtonPressed
         }
+    }
 
+    private fun saveButtonHandler() {
         binding.btnSave.setOnClickListener {
-            Log.d(
-                "Button pressed>>>",
-                "Lunch: ${flag.isLunchButtonPressed}, Dinner: ${flag.isDinnerButtonPressed}"
-            )
+            flag.isSaveButtonPressed = !flag.isSaveButtonPressed
+            if (flag.isSaveButtonPressed) {
+                binding.btnSave.setBackgroundResource(R.drawable.button_green_bg)
+                binding.btnSave.text = "Unsave"
+            } else {
+                binding.btnSave.setBackgroundResource(R.drawable.button_yellow_bg)
+                binding.btnSave.text = "Save"
+            }
         }
-    }
-
-    private fun initAdapter() {
-        adapter = FoodsAdapter(
-            foodList = foodItemMutableLists,
-            onClickListener = { foods -> onItemSelected(foods) })
-        binding.viewpager.adapter = adapter
-        binding.viewpager.isUserInputEnabled = false
-    }
-
-    private fun onItemSelected(foods: FoodItem) {
-        foods.isflipped = !foods.isflipped
-        adapter.notifyDataSetChanged()
     }
 
     private fun getDateInFormat(date: Date): String {
