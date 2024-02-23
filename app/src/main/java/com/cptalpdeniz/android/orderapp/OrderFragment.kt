@@ -3,6 +3,7 @@ package com.cptalpdeniz.android.orderapp
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,10 @@ class OrderFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val datesArray = getDatesArray()
+        val datesArray = getDatesArrayWithoutWeekends()
+        datesArray.forEach { date->
+            Log.d("dates>>>",date)
+        }
         binding.tvDate1.text =
             datesArray[0].substring(0, 3) + "\n" + datesArray[0].substring(4, datesArray[0].length)
         binding.tvDate2.text =
@@ -184,18 +188,21 @@ class OrderFragment : Fragment() {
         return dateFormat.format(date)
     }
 
-    private fun getDatesArray(): Array<String> {
-        val datesArray = arrayOfNulls<String>(10)
+    private fun getDatesArrayWithoutWeekends(): Array<String> {
+        val datesArray = arrayOfNulls<String>(14)
         val calendar = Calendar.getInstance()
-
         // Get current date
         val currentDate = calendar.time
         datesArray[0] = getDateInFormat(currentDate)
-
-        // Get next four dates
-        for (i in 1 until 10) {
+        // Get next fourteen dates excluding weekends
+        var count = 1
+        while (count < 14) {
             calendar.add(Calendar.DATE, 1)
-            datesArray[i] = getDateInFormat(calendar.time)
+            val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+            if (dayOfWeek != Calendar.SATURDAY && dayOfWeek != Calendar.SUNDAY) {
+                datesArray[count] = getDateInFormat(calendar.time)
+                count++
+            }
         }
         return datesArray.requireNoNulls()
     }
