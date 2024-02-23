@@ -1,7 +1,5 @@
 package com.cptalpdeniz.android.orderapp
 
-import android.content.res.Resources
-
 /*
 this class provide fake datasource locally
  */

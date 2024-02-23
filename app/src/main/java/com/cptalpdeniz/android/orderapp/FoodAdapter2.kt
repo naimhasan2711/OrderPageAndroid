@@ -4,15 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-
-class FoodsAdapter(
+class FoodAdapter2(
     private var foodList: List<FoodItem>,
     private val onClickListener: (FoodItem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
         return if (viewType == 1) {
-            FoodViewHolder(
+            FoodViewHolder2(
                 layoutInflater.inflate(
                     R.layout.food_item_layout,
                     parent,
@@ -20,7 +19,7 @@ class FoodsAdapter(
                 )
             )
         } else {
-            FlipViewHolder(
+            FlipViewHolder2(
                 layoutInflater.inflate(
                     R.layout.food_item_flip_layout,
                     parent,
@@ -30,28 +29,30 @@ class FoodsAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder.itemViewType) {
-            1 -> {
-                holder as FoodViewHolder
-                holder.render(foodList[position], onClickListener )
-            }
-
-            2 -> {
-                holder as FlipViewHolder
-                holder.render(foodList[position], onClickListener)
-            }
-
-            else -> holder as FoodViewHolder
-        }
+    override fun getItemCount(): Int {
+        return foodList.size
     }
+
     override fun getItemViewType(position: Int): Int {
         return if (foodList[position].isflipped) {
             1
         } else 2
     }
-    override fun getItemCount(): Int {
-        return foodList.size
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder.itemViewType) {
+            1 -> {
+                holder as FoodViewHolder2
+                holder.render(foodList[position], onClickListener)
+            }
+
+            2 -> {
+                holder as FlipViewHolder2
+                holder.render(foodList[position], onClickListener)
+            }
+
+            else -> holder as FoodViewHolder2
+        }
     }
 
 }
