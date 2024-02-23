@@ -47,6 +47,18 @@ class OrderFragment : Fragment() {
         datesArray.forEach { date->
             Log.d("dates>>>",date)
         }
+        handleDateButtonText(datesArray)
+        initAdapter()
+        initAdapter2()
+        viewPagerHandler()
+        viewPagerHandler2()
+        lunchButtonHandler()
+        dinnerButtonHandler()
+        saveButtonHandler()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun handleDateButtonText(datesArray: Array<String>) {
         binding.tvDate1.text =
             datesArray[0].substring(0, 3) + "\n" + datesArray[0].substring(4, datesArray[0].length)
         binding.tvDate2.text =
@@ -57,13 +69,24 @@ class OrderFragment : Fragment() {
             datesArray[3].substring(0, 3) + "\n" + datesArray[3].substring(4, datesArray[3].length)
         binding.tvDate5.text =
             datesArray[4].substring(0, 3) + "\n" + datesArray[4].substring(4, datesArray[4].length)
-        initAdapter()
-        initAdapter2()
-        viewPagerHandler()
-        viewPagerHandler2()
-        lunchButtonHandler()
-        dinnerButtonHandler()
-        saveButtonHandler()
+        binding.tvDate6.text =
+            datesArray[5].substring(0, 3) + "\n" + datesArray[5].substring(4, datesArray[5].length)
+        binding.tvDate7.text =
+            datesArray[6].substring(0, 3) + "\n" + datesArray[6].substring(4, datesArray[6].length)
+        binding.tvDate8.text =
+            datesArray[7].substring(0, 3) + "\n" + datesArray[7].substring(4, datesArray[7].length)
+        binding.tvDate9.text =
+            datesArray[8].substring(0, 3) + "\n" + datesArray[8].substring(4, datesArray[8].length)
+        binding.tvDate10.text =
+            datesArray[9].substring(0, 3) + "\n" + datesArray[9].substring(4, datesArray[9].length)
+        binding.tvDate11.text =
+            datesArray[10].substring(0, 3) + "\n" + datesArray[10].substring(4, datesArray[10].length)
+        binding.tvDate12.text =
+            datesArray[11].substring(0, 3) + "\n" + datesArray[11].substring(4, datesArray[11].length)
+        binding.tvDate13.text =
+            datesArray[12].substring(0, 3) + "\n" + datesArray[12].substring(4, datesArray[12].length)
+        binding.tvDate14.text =
+            datesArray[13].substring(0, 3) + "\n" + datesArray[13].substring(4, datesArray[13].length)
     }
 
     private fun initAdapter() {
