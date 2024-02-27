@@ -1,4 +1,4 @@
-package com.cptalpdeniz.android.orderapp
+package com.cptalpdeniz.android.orderapp.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,8 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.cptalpdeniz.android.orderapp.models.DateItem
+import com.cptalpdeniz.android.orderapp.R
 
-class DateAdapter(private val arrList: List<DateItem>,private val listener: OnItemClickListener) :
+class DateAdapter(private val arrList: List<DateItem>, private val listener: OnItemClickListener) :
     RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
 
     private var selectedItemPosition: Int? = null

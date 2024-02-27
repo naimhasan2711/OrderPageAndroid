@@ -1,4 +1,7 @@
-package com.cptalpdeniz.android.orderapp
+package com.cptalpdeniz.android.orderapp.utils
+
+import com.cptalpdeniz.android.orderapp.R
+import com.cptalpdeniz.android.orderapp.models.FoodItem
 
 /*
 this class provide fake datasource locally

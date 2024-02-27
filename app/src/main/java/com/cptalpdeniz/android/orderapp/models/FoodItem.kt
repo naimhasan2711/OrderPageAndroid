@@ -1,4 +1,4 @@
-package com.cptalpdeniz.android.orderapp
+package com.cptalpdeniz.android.orderapp.models
 
 /*
 data class for recycler view items

@@ -1,8 +1,12 @@
-package com.cptalpdeniz.android.orderapp
+package com.cptalpdeniz.android.orderapp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.cptalpdeniz.android.orderapp.viewholders.FlipViewHolder
+import com.cptalpdeniz.android.orderapp.models.FoodItem
+import com.cptalpdeniz.android.orderapp.viewholders.FoodViewHolder
+import com.cptalpdeniz.android.orderapp.R
 
 
 class FoodsAdapter(

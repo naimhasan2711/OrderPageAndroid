@@ -1,4 +1,4 @@
-package com.cptalpdeniz.android.orderapp
+package com.cptalpdeniz.android.orderapp.ui
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -12,7 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.cptalpdeniz.android.orderapp.R
+import com.cptalpdeniz.android.orderapp.adapters.DateAdapter
+import com.cptalpdeniz.android.orderapp.adapters.FoodAdapter2
+import com.cptalpdeniz.android.orderapp.adapters.FoodsAdapter
 import com.cptalpdeniz.android.orderapp.databinding.FragmentOrderBinding
+import com.cptalpdeniz.android.orderapp.models.DateItem
+import com.cptalpdeniz.android.orderapp.models.Flag
+import com.cptalpdeniz.android.orderapp.models.FoodItem
+import com.cptalpdeniz.android.orderapp.utils.FoodItemProvider
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
