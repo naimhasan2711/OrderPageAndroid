@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.cptalpdeniz.android.orderapp.databinding.FragmentOrderBinding
@@ -17,7 +19,7 @@ import java.util.Date
 import java.util.Locale
 
 
-class OrderFragment : Fragment() {
+class OrderFragment : Fragment(), DateAdapter.OnItemClickListener {
     private lateinit var binding: FragmentOrderBinding
 
     //fake data source
@@ -26,11 +28,14 @@ class OrderFragment : Fragment() {
 
     private lateinit var adapter: FoodsAdapter
     private lateinit var adapter2: FoodAdapter2
+    private lateinit var dateAdapter: DateAdapter
     private val flag = Flag(
         isLunchButtonPressed = false,
         isDinnerButtonPressed = false,
         isSaveButtonPressed = false
     )
+    private var dateList: List<DateItem>? = null
+    private var selectedPosition: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,10 +49,26 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val datesArray = getDatesArrayWithoutWeekends()
-        datesArray.forEach { date->
-            Log.d("dates>>>",date)
+        dateList = listOf<DateItem>(
+            DateItem(datesArray[0], false),
+            DateItem(datesArray[1], false),
+            DateItem(datesArray[2], false),
+            DateItem(datesArray[3], false),
+            DateItem(datesArray[4], false),
+            DateItem(datesArray[5], false),
+            DateItem(datesArray[6], false),
+            DateItem(datesArray[7], false),
+            DateItem(datesArray[8], false),
+            DateItem(datesArray[9], false),
+            DateItem(datesArray[10], false),
+            DateItem(datesArray[11], false),
+            DateItem(datesArray[12], false),
+            DateItem(datesArray[13], false)
+        )
+        datesArray.forEach { date ->
+            Log.d("dates>>>", date)
         }
-        handleDateButtonText(datesArray)
+        initDateAdapter()
         initAdapter()
         initAdapter2()
         viewPagerHandler()
@@ -57,43 +78,23 @@ class OrderFragment : Fragment() {
         saveButtonHandler()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun handleDateButtonText(datesArray: Array<String>) {
-        binding.tvDate1.text =
-            datesArray[0].substring(0, 3) + "\n" + datesArray[0].substring(4, datesArray[0].length)
-        binding.tvDate2.text =
-            datesArray[1].substring(0, 3) + "\n" + datesArray[1].substring(4, datesArray[1].length)
-        binding.tvDate3.text =
-            datesArray[2].substring(0, 3) + "\n" + datesArray[2].substring(4, datesArray[2].length)
-        binding.tvDate4.text =
-            datesArray[3].substring(0, 3) + "\n" + datesArray[3].substring(4, datesArray[3].length)
-        binding.tvDate5.text =
-            datesArray[4].substring(0, 3) + "\n" + datesArray[4].substring(4, datesArray[4].length)
-        binding.tvDate6.text =
-            datesArray[5].substring(0, 3) + "\n" + datesArray[5].substring(4, datesArray[5].length)
-        binding.tvDate7.text =
-            datesArray[6].substring(0, 3) + "\n" + datesArray[6].substring(4, datesArray[6].length)
-        binding.tvDate8.text =
-            datesArray[7].substring(0, 3) + "\n" + datesArray[7].substring(4, datesArray[7].length)
-        binding.tvDate9.text =
-            datesArray[8].substring(0, 3) + "\n" + datesArray[8].substring(4, datesArray[8].length)
-        binding.tvDate10.text =
-            datesArray[9].substring(0, 3) + "\n" + datesArray[9].substring(4, datesArray[9].length)
-        binding.tvDate11.text =
-            datesArray[10].substring(0, 3) + "\n" + datesArray[10].substring(4, datesArray[10].length)
-        binding.tvDate12.text =
-            datesArray[11].substring(0, 3) + "\n" + datesArray[11].substring(4, datesArray[11].length)
-        binding.tvDate13.text =
-            datesArray[12].substring(0, 3) + "\n" + datesArray[12].substring(4, datesArray[12].length)
-        binding.tvDate14.text =
-            datesArray[13].substring(0, 3) + "\n" + datesArray[13].substring(4, datesArray[13].length)
-    }
-
     private fun initAdapter() {
         adapter = FoodsAdapter(
             foodList = foodItemMutableLists,
             onClickListener = { foods -> onItemSelected(foods) })
         binding.viewpager.adapter = adapter
+    }
+
+    private fun initDateAdapter() {
+        dateAdapter = dateList?.let { it -> DateAdapter(arrList = it, this) }!!
+        binding.dateRecyclerview.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.dateRecyclerview.adapter = dateAdapter
+    }
+
+    private fun onItemSelected3(it: DateItem) {
+        Toast.makeText(requireContext(), it.dateString, Toast.LENGTH_SHORT).show()
+        it.isSaved = !it.isSaved
     }
 
     private fun initAdapter2() {
@@ -169,40 +170,60 @@ class OrderFragment : Fragment() {
 
     private fun lunchButtonHandler() {
         binding.btnLunch.setOnClickListener {
-            if (flag.isLunchButtonPressed) {
+            flag.isLunchButtonPressed = !flag.isLunchButtonPressed
+            if (!flag.isLunchButtonPressed) {
                 binding.btnLunch.setBackgroundResource(R.drawable.button_transparent_bg)
                 binding.btnLunch.setTextColor(Color.BLACK)
+                flag.isDinnerButtonPressed = true
+                binding.btnDinner.setBackgroundResource(R.drawable.button_yellow_bg)
+                binding.btnDinner.setTextColor(Color.WHITE)
+
             } else {
                 binding.btnLunch.setBackgroundResource(R.drawable.button_yellow_bg)
                 binding.btnLunch.setTextColor(Color.WHITE)
+                flag.isDinnerButtonPressed = false
+                binding.btnDinner.setBackgroundResource(R.drawable.button_transparent_bg)
+                binding.btnDinner.setTextColor(Color.BLACK)
             }
-            flag.isLunchButtonPressed = !flag.isLunchButtonPressed
         }
     }
 
     private fun dinnerButtonHandler() {
         binding.btnDinner.setOnClickListener {
-            if (flag.isDinnerButtonPressed) {
+            flag.isDinnerButtonPressed = !flag.isDinnerButtonPressed
+            if (!flag.isDinnerButtonPressed) {
                 binding.btnDinner.setBackgroundResource(R.drawable.button_transparent_bg)
                 binding.btnDinner.setTextColor(Color.BLACK)
+                flag.isLunchButtonPressed = true
+                binding.btnLunch.setBackgroundResource(R.drawable.button_yellow_bg)
+                binding.btnLunch.setTextColor(Color.WHITE)
             } else {
                 binding.btnDinner.setBackgroundResource(R.drawable.button_yellow_bg)
                 binding.btnDinner.setTextColor(Color.WHITE)
+                flag.isLunchButtonPressed = false
+                binding.btnLunch.setBackgroundResource(R.drawable.button_transparent_bg)
+                binding.btnLunch.setTextColor(Color.BLACK)
+
             }
-            flag.isDinnerButtonPressed = !flag.isDinnerButtonPressed
         }
     }
 
     private fun saveButtonHandler() {
         binding.btnSave.setOnClickListener {
-            flag.isSaveButtonPressed = !flag.isSaveButtonPressed
-            if (flag.isSaveButtonPressed) {
+            if (selectedPosition != null) {
+                toggleCheckMark(selectedPosition!!);
+            }
+            if (dateList?.get(selectedPosition!!)?.isSaved == true) {
                 binding.btnSave.setBackgroundResource(R.drawable.button_green_bg)
                 binding.btnSave.text = "Unsave"
-            } else {
+            } else if (dateList?.get(selectedPosition!!)?.isSaved == false) {
                 binding.btnSave.setBackgroundResource(R.drawable.button_yellow_bg)
                 binding.btnSave.text = "Save"
             }
+            Log.d(
+                "Button Value: >>>>>",
+                "${flag.isLunchButtonPressed.toString()},${flag.isDinnerButtonPressed.toString()}"
+            )
         }
     }
 
@@ -228,6 +249,24 @@ class OrderFragment : Fragment() {
             }
         }
         return datesArray.requireNoNulls()
+    }
+
+    override fun onItemClick(position: Int) {
+        selectedPosition = position
+        //Toast.makeText(requireContext(), "$position", Toast.LENGTH_SHORT).show()
+        if (dateList?.get(position)?.isSaved == true) {
+            binding.btnSave.setBackgroundResource(R.drawable.button_green_bg)
+            binding.btnSave.text = "Unsave"
+        } else if (dateList?.get(position)?.isSaved == false) {
+            binding.btnSave.setBackgroundResource(R.drawable.button_yellow_bg)
+            binding.btnSave.text = "Save"
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun toggleCheckMark(position: Int) {
+        dateList?.get(position)?.isSaved = !dateList?.get(position)?.isSaved!!
+        binding.dateRecyclerview.adapter?.notifyDataSetChanged()
     }
 
 }
